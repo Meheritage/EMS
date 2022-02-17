@@ -9,6 +9,7 @@ namespace webapiEMS.Models
     {
         public int EmpID { get; set; }
         public string EmpName { get; set; }
+        public string Department { get; set; }
         public string Gender { get; set; }
         public string DOB { get; set; }
         public string IDProofType { get; set; }
@@ -17,5 +18,6 @@ namespace webapiEMS.Models
         public string BloodGroup { get; set; }
         public string emailID { get; set; }
         public string EmpAddress { get; set; }
+        public string PhotoName { get; set; }
     }
 }
