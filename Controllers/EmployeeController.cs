@@ -17,7 +17,7 @@ namespace webapiEMS.Controllers
         public HttpResponseMessage Get()
         {
             string query = @"
-            select EmpID,EmpName,Gender,DOB,IDProofType,IDProofNumber,Phone,BloodGroup,emailID,EmpAddress from dbo.Employee
+            select EmpID,EmpName,Department,Gender,DOB,IDProofType,IDProofNumber,Phone,BloodGroup,emailID,EmpAddress,PhotoName from dbo.Employee
             ";
             DataTable table = new DataTable();
             using (var con =new SqlConnection(ConfigurationManager.
@@ -35,7 +35,7 @@ namespace webapiEMS.Controllers
         public HttpResponseMessage Get(int id)
         {
             string query = @"
-            select EmpID,EmpName,Gender,DOB,IDProofType,IDProofNumber,Phone,BloodGroup,emailID,EmpAddress from dbo.Employee where 
+            select EmpID,EmpName,Department,Gender,DOB,IDProofType,IDProofNumber,Phone,BloodGroup,emailID,EmpAddress,PhotoName from dbo.Employee where 
             EmpID=" + id + @" 
             ";
             DataTable table = new DataTable();
@@ -59,6 +59,7 @@ namespace webapiEMS.Controllers
                     insert into dbo.Employee values
                     (
                       '" + emp.EmpName + @"',
+                      '" + emp.Department + @"',
                       '" + emp.Gender + @"',
                       '" + emp.DOB + @"',
                       '" + emp.IDProofType + @"',
@@ -66,7 +67,8 @@ namespace webapiEMS.Controllers
                       '" + emp.Phone + @"',
                       '" + emp.BloodGroup + @"',
                       '" + emp.emailID + @"',
-                      '" + emp.EmpAddress+ @"'
+                      '" + emp.EmpAddress+ @"',
+                      '" + emp.PhotoName + @"'                     
                    )";
                 DataTable table = new DataTable();
                 using (var con = new SqlConnection(ConfigurationManager.
@@ -90,6 +92,7 @@ namespace webapiEMS.Controllers
             {
                 string query = @"
                     update dbo.Employee set EmpName= '" + emp.EmpName + @"',
+                                            Department= '" + emp.Department + @"',
                                             Gender='" + emp.Gender + @"',
                                             DOB='" + emp.DOB + @"',
                                             IDProofType='" + emp.IDProofType + @"',
@@ -97,7 +100,8 @@ namespace webapiEMS.Controllers
                                             Phone='" + emp.Phone + @"',
                                             BloodGroup='" + emp.BloodGroup + @"',
                                             emailID='" + emp.emailID + @"',
-                                            EmpAddress='" + emp.EmpAddress + @"'
+                                            EmpAddress='" + emp.EmpAddress + @"',
+                                            PhotoName= '" + emp.PhotoName + @"'
                     where EmpID=" + emp.EmpID+@"  
                  ";
                 DataTable table = new DataTable();
@@ -138,6 +142,23 @@ namespace webapiEMS.Controllers
             catch
             {
                 return "Failed to Delete!";
+            }
+        }
+        [Route("api/Employee/savefile")]
+        public string savefile()
+        {
+            try
+            {
+                var httpRequest = HttpContext.Current.Request;
+                var postedFile = httpRequest.Files[0];
+                string filename = postedFile.FileName;
+                var physicalPath = HttpContext.Current.Server.MapPath("~/Photos/" + filename);
+                postedFile.SaveAs(physicalPath);
+                return filename;
+            }
+            catch (Exception)
+            {
+                return "anonymous.png";
             }
         }
 
