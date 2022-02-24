@@ -161,6 +161,23 @@ namespace webapiEMS.Controllers
                 return "anonymous.png";
             }
         }
+        [Route("api/Employee/GetaAllDepartmentName")]
+        [HttpGet]
+        public HttpResponseMessage GetAllDeparttmentName()
+        {
+            string query = @"
+                   select Name  from dbo.Department";
+            DataTable table = new DataTable();
+            using (var con = new SqlConnection(ConfigurationManager.
+                ConnectionStrings["EmployeeDB"].ConnectionString))
+            using (var cmd = new SqlCommand(query, con))
+            using (var da = new SqlDataAdapter(cmd))
+            {
+                cmd.CommandType = CommandType.Text;
+                da.Fill(table);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK,table);
+        }
 
     }
 }
