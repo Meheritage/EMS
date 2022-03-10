@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Controllers"
   ],
-  "SelectedNode": "\\webapiEMS.sln",
+  "SelectedNode": "\\Controllers\\EmployeeController.cs",
   "PreviewInSolutionExplorer": false
 }
