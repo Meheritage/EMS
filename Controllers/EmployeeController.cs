@@ -17,7 +17,7 @@ namespace webapiEMS.Controllers
         public HttpResponseMessage Get()
         {
             string query = @"
-            select EmpID,EmpName,Department,Gender,DOB,IDProofType,IDProofNumber,Phone,BloodGroup,emailID,EmpAddress,PhotoName from dbo.Employee
+            select EmpID,EmpName,Department,Gender,convert(varchar(10),DOB,120)as DOB,IDProofType,IDProofNumber,Phone,BloodGroup,emailID,EmpAddress,PhotoName from dbo.Employee
             ";
             DataTable table = new DataTable();
             using (var con =new SqlConnection(ConfigurationManager.
@@ -35,7 +35,7 @@ namespace webapiEMS.Controllers
         public HttpResponseMessage Get(int id)
         {
             string query = @"
-            select EmpID,EmpName,Department,Gender,DOB,IDProofType,IDProofNumber,Phone,BloodGroup,emailID,EmpAddress,PhotoName from dbo.Employee where 
+            select EmpID,EmpName,Department,Gender,convert(varchar(10),DOB,120)as DOB,IDProofType,IDProofNumber,Phone,BloodGroup,emailID,EmpAddress,PhotoName from dbo.Employee where 
             EmpID=" + id + @" 
             ";
             DataTable table = new DataTable();
